@@ -1,0 +1,16 @@
+.App {
+    text-align: center;
+}
+
+.header-description {
+    background-color: green;
+    text-align: center;
+    color: white;
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.footer-description {
+    text-align: center;    
+    font-size: 12pt;    
+}

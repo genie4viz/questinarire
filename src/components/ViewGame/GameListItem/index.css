@@ -1,0 +1,19 @@
+
+.listItemContentWrapper {
+    width: 100%;
+    justify-content: space-between;    
+    flex-direction: row;
+    height: 40px;    
+}
+.itemLeftWrapper {    
+    align-items: center;
+    justify-content: space-around;
+    display: flex;
+    height: 100%;
+}
+.itemRightWrapper {
+    align-items: center;
+    justify-content: flex-end;
+    display: flex;
+    height: 100%;
+}
