@@ -1,9 +1,9 @@
 import React from 'react';
 
-export const Billing = () => {
+export const QuestionPane = () => {
     return (
         <div>
-            Billing
+            QuestionPane
         </div>
     );
 }

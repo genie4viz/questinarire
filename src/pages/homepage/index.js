@@ -1,31 +1,35 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { Layout } from 'antd';
-import { MenuSider, ViewGameContainer, Profile, Billing } from '../../components';
+import { Layout, Menu, Breadcrumb } from 'antd';
+const { Header, Content, Footer } = Layout;
 import './index.css';
-
-const { Header, Footer, Content } = Layout;
 
 function App() {
 
   return (
-    <BrowserRouter>
-        <Layout style={{ minHeight: '100vh' }}>
-          <MenuSider />
-          <Layout>
-            <Header className="header-description">VK Dashboard Title</Header>         
-            <Content>              
-              <Switch>
-                <Route path='/viewgame' component={ViewGameContainer} />
-                <Route path='/profile' component={Profile} />
-                <Route path='/billing' component={Billing} />
-                <Redirect to='/viewgame' />
-              </Switch>              
-            </Content>
-            <Footer className="footer-description">Copyright@ 2019</Footer>
-          </Layout>      
-        </Layout>
-      </BrowserRouter>   
+    <Layout className="layout">
+      <Header>
+        <div className="logo" />
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          defaultSelectedKeys={['2']}
+          style={{ lineHeight: '64px' }}
+        >
+          <Menu.Item key="1">nav 1</Menu.Item>
+          <Menu.Item key="2">nav 2</Menu.Item>
+          <Menu.Item key="3">nav 3</Menu.Item>
+        </Menu>
+      </Header>
+      <Content style={{ padding: '0 50px' }}>
+        <Breadcrumb style={{ margin: '16px 0' }}>
+          <Breadcrumb.Item>Home</Breadcrumb.Item>
+          <Breadcrumb.Item>List</Breadcrumb.Item>
+          <Breadcrumb.Item>App</Breadcrumb.Item>
+        </Breadcrumb>
+        <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>Content</div>
+      </Content>
+      <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+  </Layout>
   );
 }
 
