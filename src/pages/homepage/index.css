@@ -12,13 +12,28 @@
 
 .footer-description {
     text-align: center;    
-    font-size: 12pt;    
+    font-size: 12pt;
+    background: #777;
 }
 
-#components-layout-demo-top .logo {
+.header-description {
+    text-align: center;    
+    font-size: 18pt;
+    font-weight: bold;
+    color: white;
+}
+
+.logo {
     width: 120px;
     height: 31px;
     background: rgba(255, 255, 255, 0.2);
     margin: 16px 24px 16px 0;
     float: left;
+}
+
+.questionHistory {
+    width: 400px !important;
+    flex: 0 0 400px !important;
+    max-width: 400px !important;
+    padding: 16px;
 }
