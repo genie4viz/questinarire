@@ -9,26 +9,26 @@ export const useGetSessionId = () => {
                 setSessionId(res.data.sessionId);
             })
             .catch(err => {
-                console.log(err, "getsessionId error");
+                console.log(err, "getsessionId api error");
             });
     }, []);
     return sessionId;
 };
 
-
-// export async function getSessionId() {
-//     try {
-//         const response = await axios.post('https://xx7mc6y0w9.execute-api.ap-southeast-2.amazonaws.com/api/session');
-//         Promise.resolve(response)
-//             .then(res => {
-//                 console.log(res)
-//                 return res.data.sessionId;
-//             });
-//     } catch (error) {
-//         console.error(error);
-//         return null;
-//     }
-// }
+export const useGetQuestion = (sessionId) => {
+	const [quesInfo, setQuesInfo] = useState();
+	useEffect(() => {
+        axios.post('https://xx7mc6y0w9.execute-api.ap-southeast-2.amazonaws.com/api/question?sessionId=' + sessionId)
+            .then(res => {
+                console.log(res)
+                setQuesInfo(res.data);
+            })
+            .catch(err => {
+                console.log(err, "Get question api error");
+            });
+    }, [sessionId]);
+    return quesInfo;
+};
 
 export async function getQuestion() {
     try {

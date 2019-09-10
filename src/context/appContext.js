@@ -4,12 +4,24 @@ const AppContext = createContext(null);
 
 const initialState = {
     sessionId: null,
+    questions: [
+        "Where are you?",
+        "What time is it now?",
+        "How was it?",
+        "Going well?",
+        "Which direction do you want?"
+    ],
+    questionIndex: 0
 };
 
 const appReducer = (state, action) => {    
     switch (action.type) {
         case 'SET_SESSION_ID':
-            return {sessionId: action.value};
+            return {...state, sessionId: action.value};
+        case 'SET_QUESTIONS':
+            return {...state, questions: action.value};
+        case 'SET_QUESTION_INDEX':
+            return {...state, questionIndex: action.value};
         default:
             throw new Error('Unexpected action');
     }

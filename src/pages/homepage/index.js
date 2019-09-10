@@ -18,7 +18,7 @@ const App = () => {
   }, [sessionId]);
 
   return (
-    <Layout className="layout">{console.log(store.sessionId)}
+    <Layout className="layout">
       <Header className="header-description">
         <div className="logo" />
         <span>Questionaire</span>
