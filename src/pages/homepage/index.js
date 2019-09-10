@@ -1,21 +1,34 @@
-import React from 'react';
+import React, {useEffect, useContext, memo} from 'react';
 import { Layout } from 'antd';
-import {QuestionPane, SiderHistory} from '../../components';
+
+import {QuestionPane, SiderHistory, Spinner} from '../../components';
+import {AppContext} from '../../context/appContext';
 import './index.css';
 
-const { Header, Content, Footer, Sider } = Layout;
+import {useGetSessionId} from '../../apis';
 
-function App() {
+const { Header, Content, Footer } = Layout;
+
+const App = () => {
+  const {store, dispatch} = useContext(AppContext);  
+  const sessionId = useGetSessionId();  
+
+  useEffect(() => {    
+    dispatch({type: 'SET_SESSION_ID', value: sessionId});
+  }, [sessionId]);
 
   return (
-    <Layout className="layout">
+    <Layout className="layout">{console.log(store.sessionId)}
       <Header className="header-description">
         <div className="logo" />
         <span>Questionaire</span>
       </Header>
-      <Layout>        
-        <Content style={{padding: 32}}>
-          <QuestionPane />
+      <Layout>
+        <Content style={{padding: 32, minHeight: 700}}>
+          {store.sessionId
+            ? <QuestionPane />
+            : <Spinner />
+          }
         </Content>
         <SiderHistory />
       </Layout>
@@ -24,4 +37,4 @@ function App() {
   );
 }
 
-export default App;
+export default memo(App);

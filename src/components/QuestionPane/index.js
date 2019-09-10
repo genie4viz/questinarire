@@ -1,12 +1,15 @@
-import React from 'react';
-import { Radio } from 'antd';
-
+import React, {useEffect} from 'react';
+import { Row, Col } from 'antd';
+import {Question} from '../Question';
 import './index.css';
 
 export const QuestionPane = () => {
+
     return (
-        <div className="paneWrapper">
-            QuestionPane
-        </div>
+        <Row type="flex" justify="center">
+            <Col span={16}>
+                <Question ques="Who are you?" />
+            </Col>
+        </Row>
     );
 }

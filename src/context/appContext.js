@@ -3,34 +3,13 @@ import React, {useReducer, createContext} from 'react';
 const AppContext = createContext(null);
 
 const initialState = {
-    data: [
-        {
-            title: 'My Game #1',
-            ipaddress: '192.168.5.50',
-            port: 32500
-        },
-        {
-            title: 'My Game #2',
-            ipaddress: '192.168.5.50',
-            port: 32500
-        },
-        {
-            title: 'My Game #3',
-            ipaddress: '192.168.5.50',
-            port: 32500
-        },
-        {
-            title: 'My Game #4',
-            ipaddress: '192.168.5.50',
-            port: 32500
-        }
-    ]
+    sessionId: null,
 };
 
-const appReducer = (state, action) => {
+const appReducer = (state, action) => {    
     switch (action.type) {
-        case 'CREATE_GAME':
-            return;
+        case 'SET_SESSION_ID':
+            return {sessionId: action.value};
         default:
             throw new Error('Unexpected action');
     }
