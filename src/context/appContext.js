@@ -4,12 +4,7 @@ const AppContext = createContext(null);
 
 const initialState = {
     sessionId: null,
-    questions: [
-        "Where are you?",
-        "What time is it now?",
-        "How was it?",
-        "Going well?",
-        "Which direction do you want?"
+    questions: [        
     ],
     questionIndex: 0
 };

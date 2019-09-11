@@ -1,0 +1,10 @@
+.choiceWrapper {
+    display: flex;
+    min-width: 400px;    
+    border-radius: 4px;
+    border: 1px solid #008000;
+    background-color: white;
+    padding: 4px;
+    justify-content: center;
+    align-items: center;
+}

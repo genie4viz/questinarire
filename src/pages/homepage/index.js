@@ -5,17 +5,20 @@ import {QuestionPane, SiderHistory, Spinner} from '../../components';
 import {AppContext} from '../../context/appContext';
 import './index.css';
 
-import {useGetSessionId} from '../../apis';
+import { createSessionApi } from '../../apis';
 
 const { Header, Content, Footer } = Layout;
 
 const App = () => {
-  const {store, dispatch} = useContext(AppContext);  
-  const sessionId = useGetSessionId();  
+  const {store, dispatch} = useContext(AppContext);
+  
+  const cbSetSessionId = value => {    
+    dispatch({type: 'SET_SESSION_ID', value: value});
+  }
 
-  useEffect(() => {    
-    dispatch({type: 'SET_SESSION_ID', value: sessionId});
-  }, [sessionId]);
+  useEffect(() => {
+    createSessionApi(cbSetSessionId);
+  }, []);
 
   return (
     <Layout className="layout">
@@ -30,9 +33,9 @@ const App = () => {
             : <Spinner />
           }
         </Content>
-        <SiderHistory />
+        {/* <SiderHistory /> */}
       </Layout>
-      <Footer className="footer-description">Questionaire ©2019 Created by Alexander</Footer>
+      <Footer className="footer-description">Questionaire ©2019</Footer>
   </Layout>
   );
 }
