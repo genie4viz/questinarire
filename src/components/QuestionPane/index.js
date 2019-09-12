@@ -1,61 +1,88 @@
-import React, {useState, useEffect, useContext, useRef} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import { Row, Col, Button, Icon } from 'antd';
+import { CSSTransition } from 'react-transition-group';
 import {lastQuestionId} from '../../globals';
-import {AppContext} from '../../context/appContext';
 import {Spinner} from '../Spinner';
 import {Question} from '../Question';
 import {SelectedChoicePane} from './SelectedChoicePane';
 import {getQuestionApi, sendAnswerApi} from '../../apis';
 import './index.css';
 
-export const QuestionPane = () => {
+const maxLimitDuration = 50000;
 
-    const {store} = useContext(AppContext);
-    const [quesInfo, setQuesInfo] = useState(null);
-    const [disable, setDisable] = useState(false);
+export const QuestionPane = ({sessionId}) => {
+    
+    const [showQuestion, setShowQuestion] = useState(false);
+    const quesInfoRef = useRef(null);
+    const buttonIconLoadingRef = useRef(true);
+    const nextDisableRef = useRef(false);
     const answerIdsRef = useRef([]);
 
-    const cbGetQuession = (data) => {
+    const cbGetQuession = useCallback((data) => {        
         if(data.type === 'single_choice'){
             answerIdsRef.current = data.answers[0].id;
         }
         if(data.id === lastQuestionId){
-            setDisable(true);
+            nextDisableRef.current = true;
         }
-        setQuesInfo(data);
-    };
+        quesInfoRef.current = data;
+        buttonIconLoadingRef.current = false;
+        setShowQuestion(true);        
+        
+    }, []);
 
-    const onChangeAnswer = value => {        
+    const onChangeAnswer = value => {
         answerIdsRef.current = value;
     }
 
     const onNext = e => {
         e.preventDefault();
-        sendAnswerApi(store.sessionId, quesInfo.id, answerIdsRef.current, cbGetQuession);
+        buttonIconLoadingRef.current = true;
+        setShowQuestion(false);
+        sendAnswerApi(sessionId, quesInfoRef.current.id, answerIdsRef.current, cbGetQuession);
     };
 
     useEffect(() => {
-        getQuestionApi(store.sessionId, cbGetQuession);
-    }, [store.sessionId]);
+        getQuestionApi(sessionId, cbGetQuession);
+    }, [sessionId, cbGetQuession]);
 
     return (
         <div>
-            {quesInfo
+            {quesInfoRef.current
             ?   <div>
                     <Row type="flex" justify="center">
                         <Col span={12}>
-                            <Question ques={quesInfo.title} />
+                            <CSSTransition
+                                in={showQuestion}
+                                timeout={maxLimitDuration}
+                                unmountOnExit
+                                classNames="question"
+                            >                                
+                                <Question ques={quesInfoRef.current.title} />
+                            </CSSTransition>
                         </Col>
                     </Row>
                     <Row type="flex" justify="center">
-                        <Col span={10} className="choiceWrapper">                            
-                            <SelectedChoicePane info={quesInfo} onChangeAnswer={onChangeAnswer}/>
-                        </Col>
+                        <CSSTransition
+                            in={showQuestion}
+                            timeout={maxLimitDuration}
+                            unmountOnExit
+                            classNames="question"
+                        >                       
+                            <Col span={10} className="choiceWrapper">
+                                <SelectedChoicePane info={quesInfoRef.current} onChangeAnswer={onChangeAnswer}/>
+                            </Col>
+                        </CSSTransition>                    
                     </Row>
                     <Row type="flex" justify="center">
                         <Col span={16} style={{display: 'flex', justifyContent: 'space-between'}}>
                             <span></span>
-                            <Button type="primary" onClick={onNext} disabled={disable}>
+                            <Button 
+                                type="primary"                                
+                                loading={buttonIconLoadingRef.current}
+                                onClick={onNext} 
+                                disabled={nextDisableRef.current}
+                            >
                                 Go next
                                 <Icon type="right" />
                             </Button>

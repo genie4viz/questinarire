@@ -8,5 +8,5 @@ export const SelectedChoicePane = ({info, onChangeAnswer}) => (
             ?   <MultiChoice answers={info.answers} onChangeAnswer={onChangeAnswer} />
             :   info.type === 'numeric'
                 ?   <NumericChoice onChangeAnswer={onChangeAnswer} />
-                :   <div>Info</div>
+                :   <div>{info.title}</div>
 );

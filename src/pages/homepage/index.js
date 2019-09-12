@@ -1,19 +1,18 @@
-import React, {useEffect, useContext, memo} from 'react';
+import React, {useEffect, useState, memo} from 'react';
 import { Layout } from 'antd';
 
-import {QuestionPane, SiderHistory, Spinner} from '../../components';
-import {AppContext} from '../../context/appContext';
+import {QuestionPane, Spinner} from '../../components';
 import './index.css';
 
 import { createSessionApi } from '../../apis';
 
 const { Header, Content, Footer } = Layout;
 
-const App = () => {
-  const {store, dispatch} = useContext(AppContext);
-  
+const App = () => {  
+  const [sessionId, setSessionId] = useState(null);
+
   const cbSetSessionId = value => {    
-    dispatch({type: 'SET_SESSION_ID', value: value});
+    setSessionId(value);
   }
 
   useEffect(() => {
@@ -28,12 +27,11 @@ const App = () => {
       </Header>
       <Layout>
         <Content style={{padding: 32, minHeight: 700}}>
-          {store.sessionId
-            ? <QuestionPane />
+          {sessionId
+            ? <QuestionPane sessionId={sessionId}/>
             : <Spinner />
           }
-        </Content>
-        {/* <SiderHistory /> */}
+        </Content>        
       </Layout>
       <Footer className="footer-description">Questionaire ©2019</Footer>
   </Layout>

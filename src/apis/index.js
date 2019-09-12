@@ -21,7 +21,7 @@ export const getQuestionApi = (sessionId, callback) => {
         });
 };
 
-export const sendAnswerApi = (sessionId, questionId, answerId, callback) => {	
+export const sendAnswerApi = (sessionId, questionId, answerId, callback) => {    
     const data = {
         'answer': answerId,
         'id': questionId
